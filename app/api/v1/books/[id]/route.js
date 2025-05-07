@@ -131,7 +131,6 @@ export const PATCH = async (req, { params }) => {
       throw new Error("Invalid id");
     }
     dataJson.id = id;
-    console.log("dataJson", dataJson);
     const result = await updateBook(dataJson, "PATCH");
 
     return NextResponse.json(
