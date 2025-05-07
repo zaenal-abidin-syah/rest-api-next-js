@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  username   String   @unique @db.VarChar(50)
+  email      String   @unique @db.VarChar(100)
+  fullname   String?  @db.VarChar(150)
+  password   String   @db.VarChar(255)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+
+  @@map("users")
+}
+
+model Book {
+  id             Int      @id @default(autoincrement()) @db.UnsignedInt
+  title          String   @db.VarChar(255)
+  author         String   @db.VarChar(150)
+  publisher      String?  @db.VarChar(150)
+  isbn           String?  @unique @db.VarChar(20)
+  stock          Int      @default(0) @db.UnsignedInt
+  created_at     DateTime @default(now()) @db.Timestamp(6)
+  published_year Int?     @db.Year
+  updated_at     DateTime @updatedAt @db.Timestamp(6)
+
+  @@map("books")
+}
+
+model Loan {
+  id          Int       @id @default(autoincrement()) @db.UnsignedInt
+  status      Status    @default(borrowed)
+  book_id     Int       @db.UnsignedInt
+  created_at  DateTime  @default(now()) @db.Timestamp(6)
+  due_date    DateTime  @db.Date
+  loan_date   DateTime  @default(dbgenerated("(curdate())")) @db.Date
+  return_date DateTime? @db.Date
+  user_id     Int       @db.UnsignedInt
+
+  @@index([user_id])
+  @@index([book_id])
+  @@map("loans")
+}
+
+model RateLimit {
+  id           Int      @id @default(autoincrement()) @db.UnsignedInt
+  endpoint     String   @db.VarChar(255)
+  windowStart  DateTime @db.DateTime(0)
+  requestCount Int      @default(1) @db.UnsignedInt
+  user_id      Int      @unique @db.UnsignedInt
+
+  @@unique([user_id, windowStart, endpoint], name: "user_window_endpoint")
+  @@map("rate_limits")
+}
+
+model Token {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  token     String   @db.Text()
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  user_id   Int      @unique @db.UnsignedInt
+
+  @@index([user_id])
+  @@map("tokens")
+}
+
+enum Status {
+  borrowed
+  returned
+  overdue
+}
