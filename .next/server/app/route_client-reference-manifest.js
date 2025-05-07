@@ -1,1 +1,0 @@
-globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});globalThis.__RSC_MANIFEST["/route"]={"moduleLoading":{"prefix":"/_next/"},"ssrModuleMapping":{},"edgeSSRModuleMapping":{},"clientModules":{},"entryCSSFiles":{"/home/zaens/Codes/rest-api-with-nextjs/":[],"/home/zaens/Codes/rest-api-with-nextjs/app/route":[]},"rscModuleMapping":{},"edgeRscModuleMapping":{}}
