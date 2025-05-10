@@ -5,7 +5,9 @@ const { validateToken } = require("@/utils/tokenUtils/validateToken");
 export const GET = async (req) => {
   try {
     const token = req.headers.get("Authorization");
-
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     const data = await getAllBooks();
 

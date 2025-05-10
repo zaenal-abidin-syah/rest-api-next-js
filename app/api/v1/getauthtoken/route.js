@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
 export const GET = async (req) => {
   try {
     const authToken = req.headers.get("Authorization");
+    if (!authToken) {
+      throw new Error("Authorization header is missing");
+    }
     const base64EncodedHeader = JSON.stringify(authToken, null, 2);
     const base64Credential = base64EncodedHeader.split(" ")[1];
     const credetailBuffer = Buffer.from(base64Credential, "base64");

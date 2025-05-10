@@ -12,7 +12,9 @@ const {
 export const GET = async (req, { params }) => {
   try {
     const token = req.headers.get("Authorization");
-
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     let { id } = await params;
     id = parseInt(id);
@@ -51,6 +53,9 @@ export const GET = async (req, { params }) => {
 export const DELETE = async (req, { params }) => {
   try {
     const token = req.headers.get("Authorization");
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     let { id } = await params;
     id = parseInt(id);
     if (!id) {
@@ -90,6 +95,9 @@ export const DELETE = async (req, { params }) => {
 export const PATCH = async (req, { params }) => {
   try {
     const token = req.headers.get("Authorization");
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     let { id } = await params;
     let dataJson = await req.json();
     id = parseInt(id);
@@ -97,7 +105,6 @@ export const PATCH = async (req, { params }) => {
       throw new Error("Invalid id");
     }
     dataJson.id = id;
-
 
     const decodedToken = await validateToken(token.split(" ")[1]);
     const result = await updateLoans(dataJson);

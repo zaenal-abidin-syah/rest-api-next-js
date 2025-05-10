@@ -5,6 +5,9 @@ const { validateToken } = require("@/utils/tokenUtils/validateToken");
 export const GET = async (req, { params }) => {
   try {
     const token = req.headers.get("Authorization");
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     let { id } = await params;
     id = parseInt(id);
@@ -43,7 +46,9 @@ export const GET = async (req, { params }) => {
 export const DELETE = async (req, { params }) => {
   try {
     const token = req.headers.get("Authorization");
-
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     let { id } = await params;
     id = parseInt(id);
@@ -83,6 +88,9 @@ export const DELETE = async (req, { params }) => {
 export const PUT = async (req, { params }) => {
   try {
     const token = req.headers.get("Authorization");
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     let { id } = await params;
     let dataJson = await req.json();
@@ -123,6 +131,9 @@ export const PUT = async (req, { params }) => {
 export const PATCH = async (req, { params }) => {
   try {
     const token = req.headers.get("Authorization");
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     let { id } = await params;
     let dataJson = await req.json();

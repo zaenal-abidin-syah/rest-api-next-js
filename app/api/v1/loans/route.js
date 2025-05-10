@@ -5,7 +5,9 @@ const { getUserByEmail } = require("@/utils/dbUtils/user");
 export const GET = async (req) => {
   try {
     const token = req.headers.get("Authorization");
-
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     const data = await getAllLoans();
 
@@ -38,7 +40,9 @@ export const GET = async (req) => {
 export const POST = async (req) => {
   try {
     const token = req.headers.get("Authorization");
-
+    if (!token) {
+      throw new Error("Authorization header is missing");
+    }
     const decodedToken = await validateToken(token.split(" ")[1]);
     const dataJson = await req.json();
     const id = await getUserByEmail(decodedToken.email);
