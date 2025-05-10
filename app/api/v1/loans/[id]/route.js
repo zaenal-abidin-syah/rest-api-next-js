@@ -97,7 +97,7 @@ export const PATCH = async (req, { params }) => {
       throw new Error("Invalid id");
     }
     dataJson.id = id;
-    console.log("dataJson", dataJson);
+
 
     const decodedToken = await validateToken(token.split(" ")[1]);
     const result = await updateLoans(dataJson);

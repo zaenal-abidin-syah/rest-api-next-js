@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { compare } from "bcryptjs";
 import { getUserByEmail } from "@/utils/dbUtils/user";
+import prisma from "@/lib/prismaClient";
 
 export const generateToken = async (email, password) => {
   try {

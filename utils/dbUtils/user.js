@@ -1,4 +1,3 @@
-// import { Prisma } from "../../generated/prisma/Prisma";
 import prisma from "../../lib/prismaClient";
 import { hash } from "bcryptjs";
 
@@ -62,21 +61,6 @@ export const getUserByEmail = async (email) => {
     const user = await prisma.user.findUnique({
       where: {
         email,
-      },
-    });
-    if (!user) {
-      throw new Error("User not found");
-    }
-    return user;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-export const getUserByUsername = async (username) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        username,
       },
     });
     if (!user) {

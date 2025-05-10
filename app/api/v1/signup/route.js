@@ -1,4 +1,4 @@
-import { createUser } from "../../../../utils/dbUtils/user";
+import { createUser } from "@/utils/dbUtils/user";
 import { NextResponse } from "next/server";
 import z from "zod";
 
